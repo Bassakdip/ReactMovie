@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import './App.css';
 import MoviesList from './components/MoviesList';
+import AddMovies from './components/AddMovies';
 
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await fetch('https://swapi.py4e.com/api/films/')
+      const response = await fetch('https://movies-8b1e9-default-rtdb.firebaseio.com/movies.json')
       if (!response.ok) {
         throw new Error("Something went wrong...retrying");
       }
@@ -38,8 +39,15 @@ function App() {
     fetchMoviesHandler();
   },[fetchMoviesHandler]);
 
+  function addMovieHandler(movie) {
+    console.log(movie);
+  }
+
   return (
     <React.Fragment>
+      <section>
+        <AddMovies onAddMovie = {addMovieHandler}/>
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
